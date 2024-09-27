@@ -36,7 +36,4 @@ class bankAccount {
 // Membuat objek bank
 const bank = new bankAccount();   // Membuat objek baru bernama bank dari kelas bankAccount.
 
-// Tampilkan saldo di HTML.
-document.getElementById("saldo").innerHTML = new Intl.NumberFormat("id").format(   // Mencari elemen HTML dengan id "saldo" dan mengganti kontennya dengan saldo yang diperbarui.
-    localStorage.getItem("saldo")                                                   // Memformat saldo yang diambil dari localStorage menggunakan format angka Indonesia.
-);
+
