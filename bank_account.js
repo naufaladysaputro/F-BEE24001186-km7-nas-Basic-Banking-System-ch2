@@ -1,3 +1,9 @@
+const fs = require('fs');                 
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 // Nama file untuk menyimpan saldo
 const saldoFile = 'saldo.txt';
@@ -31,6 +37,10 @@ class bankAccount {
         saveSaldoToFile(this.saldo);          
         return;
     }
+
+    _getUserInput(questionText) {          //bankaccount
+        return new Promise((resolve) => rl.question(questionText, (input) => resolve(parseFloat(input))));
+      }
 }
 
 // Membuat objek bank
