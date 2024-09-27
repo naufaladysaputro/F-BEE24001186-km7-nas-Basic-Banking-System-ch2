@@ -44,6 +44,22 @@ class bankAccount {
         return;
     }
 
+    async withdraw() {                                //withdraw
+        const amount = await this._getUserInput("Masukkan jumlah uang yang ingin Anda tarik: ");
+        if (!isNaN(amount) && amount > 0 && amount <= this.saldo) {
+            // Simulasi operasi withdraw dengan delay 1 detik
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            this.saldo -= parseFloat(amount);
+            this.saveSaldo();
+            console.log(`Anda berhasil menarik Rp.${amount}. Saldo Anda sekarang: Rp.${this.saldo}`);
+        } else if (amount > this.saldo) {
+            console.log("Saldo tidak mencukupi untuk melakukan penarikan.");
+        } else {
+            console.log("Masukkan jumlah penarikan yang valid.");
+        }
+        return;
+    }
+
 
 
     saveSaldo() {
@@ -86,7 +102,7 @@ async function main() {
                 await savingsAccount.deposit();
                 break;
             case 3:
-
+                await savingsAccount.withdraw();
                 break;
             case 4:
                 console.log("Terima kasih! Program berakhir.");
