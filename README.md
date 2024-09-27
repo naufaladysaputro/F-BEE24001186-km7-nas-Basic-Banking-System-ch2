@@ -11,14 +11,16 @@
 
 </div>
 
-- run the program
+* run the program
 
-````sh
-node banking_system.js
+   ```sh
+   node banking_system.js
+   ```
 
-## Pseudocode
-```bash
-Kelas bankAccount:
+* Pseudocode
+
+   ```sh
+   Kelas bankAccount:
    Fungsi Konstruktor():
        saldo = readSaldoFromFile()
 
@@ -43,8 +45,11 @@ Kelas bankAccount:
            Output "Saldo tidak mencukupi untuk melakukan penarikan."
        Lainnya:
            Output "Masukkan jumlah penarikan yang valid."
-````
+   ```
+
+
 
 ## Flowchart
 
-![App Screenshot](Flowchart.jpg)
+
+![App Screenshot](images/Flowchart.jpg)
