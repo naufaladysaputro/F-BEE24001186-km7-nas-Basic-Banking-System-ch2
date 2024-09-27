@@ -1,8 +1,8 @@
-const fs = require('fs');                 
+const fs = require('fs');
 const readline = require('readline');
 const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+    input: process.stdin,
+    output: process.stdout
 });
 
 // Nama file untuk menyimpan saldo
@@ -30,64 +30,78 @@ class bankAccount {
         this.saldo = readSaldoFromFile() || saldo;       //membaca saldo di saldo.txt
     }
 
+    async deposit() {                                   //deposit
+        const amount = await this._getUserInput("Masukkan jumlah uang yang ingin Anda depositkan: ");
+        if (!isNaN(amount) && amount > 0) {
+            // Simulasi operasi deposit dengan delay 1 detik
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            this.saldo += parseFloat(amount);
+            this.saveSaldo();
+            console.log(`Anda berhasil mendepositkan Rp.${amount}. Saldo Anda sekarang: Rp.${this.saldo}`);
+        } else {
+            console.log("Masukkan jumlah deposit yang valid.");
+        }
+        return;
+    }
 
 
-    saveSaldo() {                          
+
+    saveSaldo() {
         // Simpan saldo ke file
-        saveSaldoToFile(this.saldo);          
+        saveSaldoToFile(this.saldo);
         return;
     }
 
     _getUserInput(questionText) {          //bankaccount
         return new Promise((resolve) => rl.question(questionText, (input) => resolve(parseFloat(input))));
-      }
+    }
 }
 
 // Definisi kelas SavingsAccount (subclass)
 class SavingsAccount extends bankAccount {
     constructor(saldo) {
-      super(saldo);
+        super(saldo);
     }
-  
-    showSaldo() {
-      console.log(`Saldo Anda saat ini: Rp.${this.saldo}`);
-    }
-  }
 
-  // Fungsi untuk menjalankan program
+    showSaldo() {
+        console.log(`Saldo Anda saat ini: Rp.${this.saldo}`);
+    }
+}
+
+// Fungsi untuk menjalankan program
 async function main() {
     const savingsAccount = new SavingsAccount(0);
     let isRunning = true;
-  
-    while (isRunning) {
-      const pilihan = await savingsAccount._getUserInput(
-        "\nPilih tindakan:\n1. Cek Saldo\n2. Deposit\n3. Withdraw\n4. Keluar\nPilih (1-4): "
-      );
-  
-      switch (pilihan) {
-        case 1:
-          savingsAccount.showSaldo();
-          break;
-        case 2:
-          
-          break;
-        case 3:
 
-          break;
-        case 4:
-          console.log("Terima kasih! Program berakhir.");
-          isRunning = false;
-          break;
-        default:
-          console.log("Pilihan tidak valid, silakan coba lagi.");
-          break;
-      }
+    while (isRunning) {
+        const pilihan = await savingsAccount._getUserInput(
+            "\nPilih tindakan:\n1. Cek Saldo\n2. Deposit\n3. Withdraw\n4. Keluar\nPilih (1-4): "
+        );
+
+        switch (pilihan) {
+            case 1:
+                savingsAccount.showSaldo();
+                break;
+            case 2:
+                await savingsAccount.deposit();
+                break;
+            case 3:
+
+                break;
+            case 4:
+                console.log("Terima kasih! Program berakhir.");
+                isRunning = false;
+                break;
+            default:
+                console.log("Pilihan tidak valid, silakan coba lagi.");
+                break;
+        }
     }
-  
+
     rl.close(); // Menutup readline ketika selesai
-  }
-  
-  // Menjalankan program utama
-  main();
+}
+
+// Menjalankan program utama
+main();
 
 
