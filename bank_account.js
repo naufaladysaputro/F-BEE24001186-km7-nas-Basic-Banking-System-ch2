@@ -1,23 +1,42 @@
+
+// Nama file untuk menyimpan saldo
+const saldoFile = 'saldo.txt';
+
+// Fungsi untuk membaca saldo dari file
+function readSaldoFromFile() {
+    if (fs.existsSync(saldoFile)) {
+        const data = fs.readFileSync(saldoFile, 'utf-8');
+        return parseFloat(data) || 0;
+    } else {
+        return 0; // Jika file tidak ada, saldo default adalah 0
+    }
+}
+
+// Fungsi untuk menyimpan saldo ke file
+function saveSaldoToFile(saldo) {
+    fs.writeFileSync(saldoFile, saldo.toString(), 'utf-8');
+}
+
 // Mendefinisikan sebuah kelas bankAccount
 class bankAccount {
-    constructor() {      // Dijalankan ketika objek bankAccount dibuat
-      this.saldo = parseFloat(localStorage.getItem("saldo")) || 0; // Inisialisasi properti saldo dengan nilai yang diambil dari localStorage dengan kunci "saldo"
+    constructor(saldo) {
+        // Load saldo dari file, jika ada
+        this.saldo = readSaldoFromFile() || saldo;       //membaca saldo di saldo.txt
     }
-  
-  
-  
-    simpanSaldo() {  // Untuk menyimpan saldo ke localStorage.
-      localStorage.setItem("saldo", this.saldo.toString());  // Nilai saldo diubah ke tipe data string menggunakan toString().
-      document.location.reload(); // Merefresh halaman web untuk menampilkan saldo yang diperbarui.
-      return;
+
+
+
+    saveSaldo() {                          
+        // Simpan saldo ke file
+        saveSaldoToFile(this.saldo);          
+        return;
     }
-  }
-  
-  // Membuat objek bank
-  const bank = new bankAccount();   // Membuat objek baru bernama bank dari kelas bankAccount.
-  
-  // Tampilkan saldo di HTML.
-  document.getElementById("saldo").innerHTML = new Intl.NumberFormat("id").format(   // Mencari elemen HTML dengan id "saldo" dan mengganti kontennya dengan saldo yang diperbarui.
-      localStorage.getItem("saldo")                                                   // Memformat saldo yang diambil dari localStorage menggunakan format angka Indonesia.
-  );
-  
+}
+
+// Membuat objek bank
+const bank = new bankAccount();   // Membuat objek baru bernama bank dari kelas bankAccount.
+
+// Tampilkan saldo di HTML.
+document.getElementById("saldo").innerHTML = new Intl.NumberFormat("id").format(   // Mencari elemen HTML dengan id "saldo" dan mengganti kontennya dengan saldo yang diperbarui.
+    localStorage.getItem("saldo")                                                   // Memformat saldo yang diambil dari localStorage menggunakan format angka Indonesia.
+);
