@@ -53,3 +53,42 @@
 
 
 ![App Screenshot](images/Flowchart.jpg)
+
+# Challenge 3 Database
+
+## Entitas yang Terlibat:
+- Nasabah
+- Akun
+- Transaksi
+
+## Atribut-atribut yang Relevan:
+- Nasabah:
+  - nasabah_id (Primary Key)
+  - nama
+  - alamat
+  - nomor_telepon
+  - created_at
+  - updated_at
+  - deleted_at
+
+- Akun:
+  - akun_id (Primary Key)
+  - nasabah_id (Foreign Key)
+  - jenis_akun (tabungan, deposito)
+  - saldo
+  - created_at
+  - updated_at
+  - deleted_at
+
+- Transaksi:
+  - transaksi_id (Primary Key)
+  - akun_id (Foreign Key)
+  - jenis_transaksi (deposit,  transfer, penarikan)
+  - jumlah
+  - created_at
+  - updated_at
+  - deleted_at
+
+
+## ERD (Entity-Relationship Diagram):
+![App Screenshot](images/erdbank.png)
